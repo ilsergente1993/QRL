@@ -1,0 +1,5 @@
+{
+  "name": "StripCode",
+  "description": "A specialized interface for testing custom StripCode pattern generators with real-time visualization.",
+  "requestFramePermissions": []
+}
