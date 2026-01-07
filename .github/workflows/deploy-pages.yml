@@ -1,11 +1,12 @@
 name: Build and deploy to GitHub Pages
+
 on:
   push:
     branches:
       - main
 
 permissions:
-  contents: read
+  contents: write  # Fondamentale per permettere il push sul branch gh-pages
   pages: write
   id-token: write
 
@@ -32,16 +33,21 @@ jobs:
       - name: Detect publish directory
         id: detect
         run: |
-          if [ -d build ]; then echo "dir=build" >> $GITHUB_OUTPUT
-          elif [ -d dist ]; then echo "dir=dist" >> $GITHUB_OUTPUT
-          else echo "dir=dist" >> $GITHUB_OUTPUT
+          if [ -d build ]; then
+            echo "dir=build" >> $GITHUB_OUTPUT
+          else
+            echo "dir=dist" >> $GITHUB_OUTPUT
           fi
         shell: bash
 
       - name: Ensure SPA fallback (copy index.html → 404.html)
         run: |
           PUBLISH_DIR=${{ steps.detect.outputs.dir }}
-          if [ -f "$PUBLISH_DIR/index.html" ]; then cp "$PUBLISH_DIR/index.html" "$PUBLISH_DIR/404.html"; else echo "index.html not found in $PUBLISH_DIR"; fi
+          if [ -f "$PUBLISH_DIR/index.html" ]; then
+            cp "$PUBLISH_DIR/index.html" "$PUBLISH_DIR/404.html"
+          else
+            echo "index.html not found in $PUBLISH_DIR"
+          fi
         shell: bash
 
       - name: Deploy to gh-pages
