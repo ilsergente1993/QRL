@@ -35,6 +35,7 @@ jobs:
           if [ -d build ]; then echo "dir=build" >> $GITHUB_OUTPUT
           elif [ -d dist ]; then echo "dir=dist" >> $GITHUB_OUTPUT
           else echo "dir=dist" >> $GITHUB_OUTPUT
+          fi
         shell: bash
 
       - name: Ensure SPA fallback (copy index.html → 404.html)
